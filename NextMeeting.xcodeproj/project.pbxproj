@@ -73,10 +73,7 @@
 			children = (
 				D83C0E7D0DE537D500461CFC /* NMApplicationDelegate.h */,
 				D83C0E7E0DE537D500461CFC /* NMApplicationDelegate.m */,
-				D83C0EE60DE539FA00461CFC /* CalCalendarStoreAdditions.h */,
-				D83C0EE70DE539FA00461CFC /* CalCalendarStoreAdditions.m */,
-				D8423FFB0DE8FDC9000FF954 /* CalEventAdditions.h */,
-				D8423FFC0DE8FDC9000FF954 /* CalEventAdditions.m */,
+				D87A30D11506EDC3000BA003 /* CalendarStore Additions */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -84,8 +81,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				D83C0EA60DE538F300461CFC /* CalendarStore.framework */,
+				D8423F570DE8F32D000FF954 /* ScriptingBridge.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -94,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
@@ -115,7 +113,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				D8423F570DE8F32D000FF954 /* ScriptingBridge.framework */,
 			);
 			name = "Next Meeting";
 			sourceTree = "<group>";
@@ -147,6 +144,17 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D87A30D11506EDC3000BA003 /* CalendarStore Additions */ = {
+			isa = PBXGroup;
+			children = (
+				D83C0EE60DE539FA00461CFC /* CalCalendarStoreAdditions.h */,
+				D83C0EE70DE539FA00461CFC /* CalCalendarStoreAdditions.m */,
+				D8423FFB0DE8FDC9000FF954 /* CalEventAdditions.h */,
+				D8423FFC0DE8FDC9000FF954 /* CalEventAdditions.m */,
+			);
+			name = "CalendarStore Additions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,15 +250,11 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = NextMeeting_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Next Meeting";
@@ -260,12 +264,9 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = NextMeeting_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "Next Meeting";
@@ -276,13 +277,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -291,8 +291,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;

@@ -73,7 +73,7 @@
 }
 
 - (NSString *)titleForNextEvent {
-	NSString *timeRemaining = NSLocalizedString(@"--", nil);
+	NSString *title = NSLocalizedString(@"--", nil);
     
 	if (self.nextEvents.count > 0) {
 		CalEvent *nextEvent = [self.nextEvents objectAtIndex:0];
@@ -85,12 +85,12 @@
 		int minutes = [components minute];
 		
 		if (hours == 0 && minutes == 0) {
-			timeRemaining = NSLocalizedString(@"Now!", nil);
+			title = NSLocalizedString(@"Now!", nil);
 		} else if (hours == 0) {
             if (abs(minutes) == 1) {
-                timeRemaining = [NSString stringWithFormat:NSLocalizedString(@"%d min", nil), minutes];
+                title = [NSString stringWithFormat:NSLocalizedString(@"%d min", nil), minutes];
             } else {
-                timeRemaining = [NSString stringWithFormat:NSLocalizedString(@"%d mins", nil), minutes];
+                title = [NSString stringWithFormat:NSLocalizedString(@"%d mins", nil), minutes];
             }
 		} else {
 			NSString *minFraction = nil;
@@ -105,14 +105,18 @@
 			}
 			
             if (hours == 1) {
-                timeRemaining = [NSString stringWithFormat:@"%d%@ hr", hours, (minFraction ? [@" " stringByAppendingString:minFraction] : @"")];
+                title = [NSString stringWithFormat:@"%d%@ hr", hours, (minFraction ? [@" " stringByAppendingString:minFraction] : @"")];
             } else {
-                timeRemaining = [NSString stringWithFormat:@"%d%@ hrs", hours, (minFraction ? [@" " stringByAppendingString:minFraction] : @"")];
+                title = [NSString stringWithFormat:@"%d%@ hrs", hours, (minFraction ? [@" " stringByAppendingString:minFraction] : @"")];
             }
-		}		
+		}
+        
+        if (nextEvent.title.length) {
+            title = [nextEvent.title stringByAppendingFormat:@" in %@", title];
+        }
 	}
     
-    return timeRemaining;
+    return title;
 }
 
 @end

@@ -1,4 +1,4 @@
-Next Meeting
+## Next Meeting
 
 Next Meeting is a simple little menu bar application for Mac OS X that displays the time remaining until your next event in iCal.
 

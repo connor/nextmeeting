@@ -1,5 +1,3 @@
-/* Public domain */
-
 #import "NMApplicationDelegate.h"
 #import <CalendarStore/CalendarStore.h>
 #import "CalCalendarStoreAdditions.h"
@@ -58,61 +56,74 @@
     }
 	
     // Generate new menu items
-	for (CalEvent *event in self.nextEvents) {
-		NSMenuItem *eventMenuItem = [[NSMenuItem alloc] initWithTitle:event.title action:@selector(showEvent:) keyEquivalent:@""];
-		eventMenuItem.representedObject = event;
-		[statusItemMenu insertItem:eventMenuItem atIndex:[statusItemMenu indexOfItemWithTag:42]]; // insert above separator
-	}
+//	for (CalEvent *event in self.nextEvents) {
+//		NSMenuItem *eventMenuItem = [[NSMenuItem alloc] initWithTitle:event.title action:@selector(showEvent:) keyEquivalent:@""];
+//		eventMenuItem.representedObject = event;
+//		[statusItemMenu insertItem:eventMenuItem atIndex:[statusItemMenu indexOfItemWithTag:42]]; // insert above separator
+//	}
 	
 	if (self.nextEvents.count == 0) {
 		[statusItemMenu insertItemWithTitle:NSLocalizedString(@"No meetings today", nil) action:nil keyEquivalent:@"" atIndex:0];
     }
     
     // Update UI again in a minute
-	[self performSelector:@selector(updateStatusItemUI) withObject:nil afterDelay:60];	
+	[self performSelector:@selector(updateStatusItemUI) withObject:nil afterDelay:1];
 }
 
 - (NSString *)titleForNextEvent {
 	NSString *title = NSLocalizedString(@"--", nil);
-    
+   
 	if (self.nextEvents.count > 0) {
 		CalEvent *nextEvent = [self.nextEvents objectAtIndex:0];
         
 		NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-		unsigned int unitFlags = NSHourCalendarUnit | NSMinuteCalendarUnit;
+		unsigned int unitFlags = NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
 		NSDateComponents *components = [gregorian components:unitFlags fromDate:[NSDate date] toDate:nextEvent.startDate options:0];
 		int hours = [components hour];
 		int minutes = [components minute];
-		
-		if (hours == 0 && minutes == 0) {
-			title = NSLocalizedString(@"Now!", nil);
-		} else if (hours == 0) {
-            if (abs(minutes) == 1) {
-                title = [NSString stringWithFormat:NSLocalizedString(@"%d min", nil), minutes];
-            } else {
-                title = [NSString stringWithFormat:NSLocalizedString(@"%d mins", nil), minutes];
-            }
-		} else {
-			NSString *minFraction = nil;
-			if (hours <= 5) {
-				if (minutes >= 7 && minutes <= 22) {
-					minFraction = NSLocalizedString(@"¼", nil);
-				} else if (minutes >= 23 && minutes <= 37) {
-					minFraction = NSLocalizedString(@"½", nil);
-                } else if (minutes >= 38 && minutes <= 52) {
-					minFraction = NSLocalizedString(@"¾", nil);
+		int seconds = [components second];
+
+        if ((hours == 0 && minutes >= 0) || (hours >= 0 && minutes >= 0)) {
+            
+            if (hours == 0 && minutes == 0) {
+                if (seconds > 0) {
+                    if (seconds >= 10) {
+                        title = [NSString stringWithFormat:NSLocalizedString(@"0:%d", nil), seconds];
+                    } else {
+                        title = [NSString stringWithFormat:NSLocalizedString(@"0:0%d", nil), seconds];
+                    }
+                
+                } else {
+                    title = NSLocalizedString(@"Now!", nil);
                 }
-			}
-			
-            if (hours == 1) {
-                title = [NSString stringWithFormat:@"%d%@ hr", hours, (minFraction ? [@" " stringByAppendingString:minFraction] : @"")];
+            } else if (hours == 0) {
+                if (seconds >= 10) {
+                    title = [NSString stringWithFormat:NSLocalizedString(@"%d:%d", nil), minutes, seconds];
+                } else {
+                    title = [NSString stringWithFormat:NSLocalizedString(@"%d:0%d", nil), minutes, seconds];
+                }
             } else {
-                title = [NSString stringWithFormat:@"%d%@ hrs", hours, (minFraction ? [@" " stringByAppendingString:minFraction] : @"")];
+                NSString *minFraction = nil;
+                if (hours <= 24) {
+                    if (minutes >= 7 && minutes <= 22) {
+                        minFraction = NSLocalizedString(@"¼", nil);
+                    } else if (minutes >= 23 && minutes <= 37) {
+                        minFraction = NSLocalizedString(@"½", nil);
+                    } else if (minutes >= 38 && minutes <= 52) {
+                        minFraction = NSLocalizedString(@"¾", nil);
+                    }
+                }
+
+                if (seconds >= 10) {
+                    title = [NSString stringWithFormat:@"%d:%d:%d", hours, minutes, seconds];
+                } else {
+                    title = [NSString stringWithFormat:@"%d:%d:0%d", hours, minutes, seconds];
+                }
             }
-		}
-        
-        if (nextEvent.title.length) {
-            title = [nextEvent.title stringByAppendingFormat:@" in %@", title];
+            
+            if (nextEvent.title.length) {
+                title = [nextEvent.title stringByAppendingFormat:@" — %@", title];
+            }
         }
 	}
     

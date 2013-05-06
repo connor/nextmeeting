@@ -1,5 +1,3 @@
-/* Public domain */
-
 #import "CalCalendarStoreAdditions.h"
 
 
@@ -11,7 +9,7 @@
 	CalCalendarStore *defaultStore = [self defaultCalendarStore];
 	
     NSDate *startDate = [NSDate dateWithTimeIntervalSinceNow:pastHalfDayInterval];
-    NSDate *endDate = [NSDate dateWithNaturalLanguageString:@"tomorrow at midnight"];
+    NSDate *endDate = [NSDate dateWithNaturalLanguageString:@"a week from now"];
 	NSPredicate *todayPredicate = [self eventPredicateWithStartDate:startDate endDate:endDate calendars:[defaultStore calendars]];
     
 	NSArray *todaysEvents = [defaultStore eventsWithPredicate:todayPredicate];
